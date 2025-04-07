@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Write a Blog Post</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: auto;
+        }
+        input, textarea {
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+            margin-bottom: 20px;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        .response {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Write a Blog Post</h1>
+        <form id="blogForm">
+            
+            <textarea id="content" name="content" rows="10" placeholder="Blog Content" required></textarea>
+            <button type="submit">Get Title Suggestion</button>
+        </form>
+        <div class="response" id="response"></div>
+    </div>
+
+</body>
+<script>
+    document.getElementById('blogForm').addEventListener('submit', async function(event) {
+            event.preventDefault();
+
+            const content = document.getElementById('content').value;
+
+            const responseElement = document.getElementById('response');
+            responseElement.innerHTML = 'Submitting...';
+
+            const apiUrl = "{% url 'get_blog_title_suggestions' %}";
+
+            try {
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                            "number_of_suggestions":3,
+                            "blog_content":content
+                        }),
+                });
+
+                const result = await response.json();
+
+                if (response.ok) {
+                    responseElement.innerHTML = '<ul>' +
+                        result.data.title.map(item => `<li>${item}</li>`).join('') +
+                        '</ul>';
+                } else {
+                    responseElement.innerHTML = 'Error: ' + result.message;
+                }
+            } catch (error) {
+                responseElement.innerHTML = 'Error: ' + error.message;
+            }
+        });
+</script>
+</html>
