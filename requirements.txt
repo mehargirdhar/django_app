@@ -1,4 +1,6 @@
+boto3
 django
 djangorestframework
 openai
 python-dotenv
+requests

@@ -42,7 +42,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
-    'blog_post'
+    'blog_post',
+    'speech_to_text'
 ]
 
 MIDDLEWARE = [
