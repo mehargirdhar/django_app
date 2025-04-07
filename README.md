@@ -28,7 +28,7 @@ This project implements two main features: audio transcription with speaker diar
 1.  **Clone the Repository**
 
     ```bash
-    git clone [https://github.com/mehargirdhar/django_app.git](https://github.com/yourusername/gen_ai.git)
+    git clone https://github.com/mehargirdhar/django_app.git
     cd django_app
     ```
 
