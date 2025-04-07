@@ -1,5 +1,4 @@
 import os
-import requests
 
 from django.core.files.storage import default_storage
 from django.shortcuts import render
@@ -11,7 +10,7 @@ from utils.aws_management import AmazonS3,AmazonTranscribe
 
 class ScheduleTranscriptionJob(APIView):
     def post(self, request):
-        # try:
+        try:
             mp3_file = request.FILES['file']
             file_path = default_storage.save(mp3_file.name, mp3_file)
 
@@ -47,12 +46,12 @@ class ScheduleTranscriptionJob(APIView):
                         status=status.HTTP_400_BAD_REQUEST
                 )
             
-        # except Exception as error:
-# 
-            # return Response(
-                # data={"status": False, "message":str(error)},
-                # status=status.HTTP_500_INTERNAL_SERVER_ERROR
-            # )
+        except Exception as error:
+
+            return Response(
+                data={"status": False, "message":str(error)},
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR
+            )
 
 class GetTranscribedText(APIView):
      def post(self, request):
